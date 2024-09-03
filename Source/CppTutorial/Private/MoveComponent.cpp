@@ -12,7 +12,6 @@ UMoveComponent::UMoveComponent()
 
 }
 
-
 // Called when the game starts
 void UMoveComponent::BeginPlay()
 {
@@ -22,6 +21,8 @@ void UMoveComponent::BeginPlay()
 	Offset.Normalize();
 
 	OffsetNormalized = Offset.GetSafeNormal();
+
+	SetComponentTickEnabled(MoveEnabled);
 }
 
 
@@ -33,9 +34,6 @@ void UMoveComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	CurrentDistance += MaxDistance * DeltaTime * Speed * Direction;
 	SetRelativeLocation(StartPosition + OffsetNormalized * CurrentDistance);
 
-	UE_LOG(LogTemp, Log, TEXT("%f"), CurrentDistance);
-
 	if (CurrentDistance > MaxDistance) Direction = -1;
 	if (CurrentDistance < 0) Direction = 1;
 }
-
